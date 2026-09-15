@@ -215,9 +215,9 @@ Requirements are numbered for reference from the backlog. Priority uses MoSCoW: 
 
 ### 3.1 Data input
 
-Data will reach the application by four routes. Three are available to users and one is restricted to maintenance.
+Data will reach the application by four routes. Three will be available to users and one will be restricted to maintenance.
 
-**Route 1: manual entry through web forms.** This is the primary route and covers everything the hotel knows about itself. Hotels, room types and their base prices, competitor selections, contracted group rates, manually added events, impact score overrides, achieved occupancy, and reminders are all typed in by the user. Forms will validate before submission and the API will validate again on arrival, since a client side check protects the user's time but not the database.
+**Route 1: manual entry through web forms.** This will be the primary route, and it will cover everything the hotel knows about itself. Hotels, room types and their base prices, competitor selections, contracted group rates, manually added events, impact score overrides, achieved occupancy, and reminders are all typed in by the user. Forms will validate before submission and the API will validate again on arrival, since a client side check protects the user's time but not the database.
 
 **Route 2: automated retrieval from third party web APIs.** Competitor rates and local events are fetched over HTTPS as JSON, in response to a user action rather than on a schedule. Two categories of service are involved:
 
@@ -226,11 +226,11 @@ Data will reach the application by four routes. Three are available to users and
 | Travel agency rate provider (Booking.com through RapidAPI, Google Hotels through SerpApi, or HotelLens) | Live room rates for competitor properties | A user opens competitor analysis or requests a recommendation for a stay window | Property identifier, room description, nightly rate, currency, agency name |
 | Ticketmaster Discovery API | Events in the hotel's city | A user opens the events calendar or prices a date range | Event name, venue, start and end dates, category, expected attendance |
 
-Responses are validated and normalised on arrival, because provider payloads vary in shape and cannot be trusted to be complete. A missing or non numeric rate is discarded rather than stored as zero, which would drag a competitor average downwards and produce a damaging recommendation. Provider credentials are read from environment variables. Where a provider is unavailable, the failure is caught and reported to the user, and previously stored figures remain on screen.
+Responses will be validated and normalised on arrival, because provider payloads vary in shape and cannot be trusted to be complete. A missing or non numeric rate will be discarded rather than stored as zero, which would drag a competitor average downwards and produce a damaging recommendation. Provider credentials will be read from environment variables. Where a provider is unavailable, the failure will be caught and reported to the user, and previously stored figures will remain on screen.
 
-**Route 3: assisted import from a provider listing.** A user may search for their own property by name and city and import it, which creates the hotel record and, where the provider returns them, its room types. This exists because typing twenty room types by hand is the point at which a user abandons the product. Imported records are editable afterwards and carry no special status.
+**Route 3: assisted import from a provider listing.** A user will be able to search for their own property by name and city and import it, which will create the hotel record and, where the provider returns them, its room types. This route is in the design because typing twenty room types by hand is the point at which a user abandons the product. Imported records will be editable afterwards and will carry no special status.
 
-**Route 4: administrative scripts.** Two operations are deliberately kept out of the interface and performed by scripts run against the database: elevating an account to platform administrator, and backfilling organisation membership for accounts created before organisations existed.
+**Route 4: administrative scripts.** Two operations will be kept out of the interface deliberately and performed by scripts run against the database: elevating an account to platform administrator, and backfilling organisation membership for accounts created before organisations existed.
 
 Reading a dataset from an uploaded file, such as a CSV export from a property management system, is **not** part of this iteration. It is recorded in the backlog as a candidate for iteration 2.
 
@@ -238,19 +238,19 @@ Reading a dataset from an uploaded file, such as a CSV export from a property ma
 
 **Selected solution: PostgreSQL, a relational SQL database, hosted as a managed instance and accessed through the Prisma ORM.**
 
-The data is relational in the ordinary sense. A hotel has room types, a room type has priced nights, a priced night has the competitor observations that informed it, and every one of those belongs to an owner and an organisation. The queries the application performs are joins across those relationships and comparisons over date ranges, which is what a relational engine is built to do. Three further properties decided the choice:
+The data is relational in the ordinary sense. A hotel has room types, a room type has priced nights, a priced night has the competitor observations that informed it, and every one of those belongs to an owner and an organisation. The queries the application will perform are joins across those relationships and comparisons over date ranges, which is what a relational engine is built to do. Three further properties decided the choice:
 
 1. **Constraints belong in the database.** One priced night per hotel, room type, and date is a rule the schema can enforce by a unique constraint. Enforcing it in application code instead would eventually allow a duplicate through a second code path.
 2. **Transactions.** Writing a pricing record together with the competitor prices that justify it must either happen completely or not at all. A half written recommendation is worse than none.
 3. **Referential integrity.** Deleting a hotel must not leave orphaned room types and rates behind.
 
-A document store such as DynamoDB or MongoDB was considered and rejected. The access patterns are not known in advance, since a market report slices by date, by competitor, and by room type depending on what the manager is looking at, and a document store would require either denormalisation or a secondary index for each of those. The data volume for a small hotel is modest and does not call for horizontal partitioning. The application would gain nothing from a schemaless store and would lose the constraints described above.
+A document store such as DynamoDB or MongoDB was considered and rejected. The access patterns are not known in advance, since a market report may slice by date, by competitor, or by room type depending on what the manager is looking at, and a document store would require either denormalisation or a secondary index for each of those. The data volume for a small hotel is modest and does not call for horizontal partitioning. The application would gain nothing from a schemaless store and would lose the constraints described above.
 
-**Connection.** The connection string is supplied in the `DATABASE_URL` environment variable and is never committed. One client instance is shared across requests and cached in development so that reloading does not open a new connection pool each time. The schema file is the single source of truth: the typed client and the migrations are both generated from it.
+**Connection.** The connection string will be supplied in the `DATABASE_URL` environment variable and will never be committed. One client instance will be shared across requests, cached in development so that reloading does not open a new connection pool each time. The schema file will act as the single source of truth, and both the typed client and the migrations will be generated from it.
 
 ### 3.3 Logical data model
 
-Eleven tables and four enumerated types. The tables that carry the domain:
+The schema will define eleven tables and four enumerated types. Those that carry the domain:
 
 | Entity | Purpose | Notable fields |
 |----------------|----------------------------------|--------------------------------------------------|
@@ -287,7 +287,7 @@ Constraints and indexes that the schema will enforce:
 
 ### 3.4 What is stored and what is not
 
-Provider responses are not archived in full. A rate retrieved for a competitor is normalised and written as a `CompetitorPrice` row attached to the pricing record it informed, which preserves the evidence behind a recommendation without accumulating raw payloads. Everything the user types is persisted. Session tokens are held in browser storage on the client and are not stored server side, which is what allows the API to remain stateless. API keys live in environment variables in the hosting platform and in an untracked local file during development.
+Provider responses will not be archived in full. A rate retrieved for a competitor will be normalised and written as a `CompetitorPrice` row attached to the pricing record it informed, which preserves the evidence behind a recommendation without accumulating raw payloads. Everything the user types will be persisted. Session tokens will be held in browser storage on the client rather than server side, which is what allows the API to remain stateless. API keys will live in environment variables in the hosting platform, and in an untracked local file during development.
 
 ---
 
