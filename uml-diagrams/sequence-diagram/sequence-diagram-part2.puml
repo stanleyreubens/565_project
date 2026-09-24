@@ -1,0 +1,55 @@
+@startuml sequence-diagram-part2
+!include _skin.iuml
+autonumber 21 "<b>0."
+title UC1  Generate Rate Recommendation\nPart 2 of 2: pricing calculation, persistence and response
+
+actor "Revenue\nManager" as RM
+box "Hotel Revenue Manager" #FCFDFC
+  boundary "PricingPage\n<<UI>>" as UI
+  control "PricingRoute\n<<API>>" as API
+  control "PricingService" as PS
+  database "PostgreSQL\nvia Prisma" as DB
+end box
+
+note across #EDF5F2 : Continued from Part 1. Competitor rates and local events are already in hand.
+
+activate UI
+activate API
+
+opt rate provider unreachable or returning an error
+  API -> DB : readLastKnownPrices(hotel, dateRange)
+  activate DB
+  DB --> API : most recent CompetitorPrice rows
+  deactivate DB
+  API -> UI : flag rates as last known values
+end
+
+API -> DB : findSmerfRate(hotel, roomType, date)
+activate DB
+DB --> API : contracted group rate or none
+deactivate DB
+
+API -> PS : calculateRecommendedPrice(inputs)
+activate PS
+PS -> PS : competitorAverage()
+PS -> PS : calculateEventImpact()
+PS -> PS : costFloor = cost x (1 + margin)
+
+opt contracted group rate exceeds the cost floor
+  PS -> PS : raise floor to the contracted rate
+end
+
+PS -> PS : generatePricingStrategies()
+PS --> API : Recommendation with strategy list
+deactivate PS
+
+API -> DB : upsert PricingHistory + CompetitorPrice
+activate DB
+DB --> API : saved pricing record
+deactivate DB
+
+API --> UI : 200 recommendation payload
+deactivate API
+UI --> RM : show rate, strategies and evidence
+deactivate UI
+@enduml

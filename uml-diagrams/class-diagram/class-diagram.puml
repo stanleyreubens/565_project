@@ -1,0 +1,235 @@
+@startuml class-diagram
+' Hotel Revenue Manager - Class Diagram
+
+skinparam dpi 200
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Helvetica
+skinparam defaultFontSize 13
+skinparam nodesep 32
+skinparam ranksep 48
+skinparam class {
+  BackgroundColor #FFFFFF
+  BorderColor #1C6B58
+  BorderThickness 1.4
+  HeaderBackgroundColor #EDF5F2
+  FontSize 14
+  FontStyle bold
+  AttributeFontSize 12
+  AttributeFontColor #131A18
+  StereotypeFontSize 11
+}
+skinparam ArrowColor #14201F
+skinparam ArrowFontSize 12
+
+package "Domain" #FCFDFC {
+
+  class Organization {
+    - id : UUID
+    - name : String
+    - emailDomain : String {unique}
+    - createdAt : DateTime
+    + addUser(u) : void
+    + ownsHotel(h) : Boolean
+  }
+
+  class User {
+    - id : UUID
+    - name : String
+    - email : String {unique}
+    - passwordHash : String
+    - role : Role
+    + verifyPassword(plain) : Boolean
+    + canAccess(h) : Boolean
+  }
+
+  class Hotel {
+    - id : UUID
+    - name : String
+    - city : String
+    - country : String
+    - starRating : Float
+    - amenities : String[]
+    - active : Boolean
+    + addRoomType(rt) : void
+    + addCompetitor(c) : void
+    + deactivate() : void
+  }
+
+  class RoomType {
+    - id : UUID
+    - name : String
+    - basePrice : Decimal
+    - capacity : Integer
+    - features : String[]
+    + costFloor(margin) : Decimal
+  }
+
+  class Competitor {
+    - id : UUID
+    - externalId : String
+    - name : String
+    - starRating : Float
+    - distance : Float
+  }
+
+  class Event {
+    - id : UUID
+    - name : String
+    - venue : String
+    - city : String
+    - startDate : Date
+    - endDate : Date
+    - expectedAttendance : Integer
+    - source : EventSource
+    - impactScore : Integer
+    + coversDate(d) : Boolean
+    + setImpactScore(s) : void
+  }
+
+  class PricingHistory {
+    - id : UUID
+    - date : Date
+    - recommendedPrice : Decimal
+    - actualPrice : Decimal
+    - occupancyRate : Float
+    + recordActual(price, occ) : void
+  }
+
+  class CompetitorPrice {
+    - id : UUID
+    - hotelName : String
+    - roomType : String
+    - price : Decimal
+    - agency : String
+  }
+
+  class SmerfRate {
+    - id : UUID
+    - startDate : Date
+    - endDate : Date
+    - rate : Decimal
+    - groupName : String
+    - segment : String
+    + coversDate(d) : Boolean
+  }
+
+  class Reminder {
+    - id : UUID
+    - title : String
+    - dueDate : Date
+    - priority : ReminderPriority
+    - status : ReminderStatus
+    + complete() : void
+    + dismiss() : void
+  }
+}
+
+package "Services" #FCFDFC {
+
+  class PricingService {
+    - minimumMargin : Float = 10
+    + calculateRecommendedPrice(in) : Recommendation
+    + calculateEventImpact(events) : EventImpact
+    + generatePricingStrategies(base) : Strategy[]
+  }
+
+  interface CompetitorProvider <<interface>> {
+    + searchProperties(name, city) : Competitor[]
+    + getRates(id, window) : CompetitorPrice[]
+    + supportsOtaBreakdown() : Boolean
+  }
+
+  class BookingProvider {
+    + getRates(id, window) : CompetitorPrice[]
+  }
+
+  class SerpApiProvider {
+    + getRates(id, window) : CompetitorPrice[]
+  }
+
+  class EventsService {
+    + getEvents(city, from, to) : Event[]
+    + scoreImpact(raw) : Integer
+  }
+
+  class AuthService {
+    + register(name, email, pw) : User
+    + signIn(email, pw) : Token
+    + verifyAuth(token) : User
+  }
+}
+
+package "Value objects" #FCFDFC {
+  class Recommendation {
+    - recommendedPrice : Decimal
+    - minimumViablePrice : Decimal
+    - competitorAverage : Decimal
+    - smerfApplied : Boolean
+  }
+  class Strategy {
+    - name : String
+    - price : Decimal
+    - description : String
+  }
+  class EventImpact {
+    - demandMultiplier : Float
+    - totalImpactScore : Integer
+  }
+}
+
+enum Role {
+  USER
+  ADMIN
+  SUPER_ADMIN
+}
+enum EventSource {
+  TICKETMASTER
+  MANUAL
+}
+enum ReminderPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+enum ReminderStatus {
+  PENDING
+  COMPLETED
+  DISMISSED
+}
+
+' ----- domain associations with multiplicities -----
+Organization "1" o-- "0..*" User : employs >
+Organization "1" o-- "0..*" Hotel : owns >
+Organization "1" o-- "0..*" Reminder : scopes >
+User "1" -- "0..*" Hotel : creates >
+User "1" -- "0..*" Reminder : raises >
+Hotel "1" *-- "1..*" RoomType : sells >
+Hotel "1" *-- "0..*" Competitor : tracks >
+Hotel "1" *-- "0..*" SmerfRate : contracts >
+Hotel "1" -- "0..*" PricingHistory : prices >
+Hotel "0..1" -- "0..*" Reminder : concerns >
+RoomType "1" -- "0..*" PricingHistory : priced as >
+RoomType "1" -- "0..*" SmerfRate : covered by >
+PricingHistory "1" *-- "0..*" CompetitorPrice : evidenced by >
+PricingHistory "0..*" -- "0..*" Event : influenced by >
+Recommendation "1" *-- "1..*" Strategy : offers >
+Recommendation "1" -- "1" EventImpact : reports >
+
+User "1" --> "1" Role : has >
+Event "1" --> "1" EventSource : from >
+Reminder "1" --> "1" ReminderPriority : rated >
+Reminder "1" --> "1" ReminderStatus : in >
+
+' ----- service relationships -----
+CompetitorProvider <|.. BookingProvider
+CompetitorProvider <|.. SerpApiProvider
+PricingService ..> CompetitorProvider : uses
+PricingService ..> EventsService : uses
+PricingService ..> Recommendation : creates
+CompetitorProvider ..> CompetitorPrice : produces
+EventsService ..> Event : produces
+AuthService ..> User : authenticates
+
+@enduml

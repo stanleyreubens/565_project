@@ -1,0 +1,66 @@
+@startuml sequence-diagram-part1
+!include _skin.iuml
+autonumber "<b>0."
+title UC1  Generate Rate Recommendation\nPart 1 of 2: request, authentication and market data
+
+actor "Revenue\nManager" as RM
+box "Hotel Revenue Manager" #FCFDFC
+  boundary "PricingPage\n<<UI>>" as UI
+  control "PricingRoute\n<<API>>" as API
+  control "AuthService" as AUTH
+  control "CompetitorProvider" as CP
+  control "EventsService" as EVS
+  database "PostgreSQL\nvia Prisma" as DB
+end box
+participant "Rate Provider\nAPI" as RAPI
+participant "Events API" as EAPI
+
+RM -> UI : select hotel, room type and stay dates
+activate UI
+UI -> API : GET /pricing/{hotel}/{room}/calculate
+activate API
+
+API -> AUTH : verifyAuth(bearer token)
+activate AUTH
+AUTH -> DB : findUser(tokenSubject)
+activate DB
+DB --> AUTH : user with organisation
+deactivate DB
+AUTH --> API : authenticated user
+deactivate AUTH
+
+alt token missing, expired or invalid
+  API --> UI : 401 Unauthorized
+  UI --> RM : return to sign in page
+
+else token valid and user may access the hotel
+  API -> DB : loadHotel(id) with rooms and competitors
+  activate DB
+  DB --> API : hotel, room type, competitors
+  deactivate DB
+
+  par gather market signals
+    loop for each competitor in the set
+      API -> CP : getRates(externalId, stayWindow)
+      activate CP
+      CP ->> RAPI : GET nightly rates over HTTPS
+      RAPI --> CP : JSON payload
+      CP -> CP : normalise, drop non numeric
+      CP --> API : CompetitorPrice list
+      deactivate CP
+    end
+  else in parallel
+    API -> EVS : getEvents(city, dateRange)
+    activate EVS
+    EVS ->> EAPI : GET events over HTTPS
+    EAPI --> EVS : JSON payload
+    EVS -> EVS : score impact from 1 to 10
+    EVS --> API : Event list
+    deactivate EVS
+  end
+end
+deactivate API
+deactivate UI
+
+note across #EDF5F2 : Continues in Part 2 with the pricing calculation
+@enduml
