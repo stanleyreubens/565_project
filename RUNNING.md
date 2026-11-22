@@ -1,7 +1,7 @@
 # Hotel Revenue Manager: how to run the application
 
-Stanley Ogbumuo
-Bowie State University, Department of Computer Science
+Stanley Ogbumuo\
+Bowie State University, Department of Computer Science\
 COSC 565/369 Software Engineering 1
 
 This document takes a machine with nothing installed and ends with the
