@@ -1,0 +1,693 @@
+/* Location: frontend/src/styles/PricingRecommendations.css */
+
+.pricing-recommendations-container {
+    padding: 20px;
+  }
+  
+  .search-container {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  
+  .search-container form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: flex-end;
+  }
+  
+  .search-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 200px;
+  }
+  
+  .search-group label {
+    font-size: 14px;
+    margin-bottom: 5px;
+    font-weight: 500;
+  }
+  
+  .search-group select,
+  .search-group input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .search-container button {
+    padding: 9px 20px;
+    background-color: #4a6fff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+  }
+  
+  .search-container button:hover {
+    background-color: #3a5fe0;
+  }
+  
+  .search-container button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+
+  /* Date Tabs for multi-day pricing */
+  .date-tabs-container {
+    margin-bottom: 16px;
+    background: #f5f5f5;
+    padding: 12px 16px;
+    border-radius: 8px;
+  }
+
+  .date-tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .date-tab {
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    background: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+    transition: all 0.2s;
+    position: relative;
+  }
+
+  .date-tab:hover {
+    border-color: #4a6fff;
+    color: #4a6fff;
+  }
+
+  .date-tab.active {
+    background: #4a6fff;
+    color: white;
+    border-color: #4a6fff;
+  }
+
+  .date-tab.error {
+    border-color: #f44336;
+    color: #f44336;
+  }
+
+  .date-tab.error.active {
+    background: #f44336;
+    color: white;
+  }
+
+  .error-dot {
+    display: inline-block;
+    margin-left: 4px;
+    font-weight: bold;
+  }
+
+  /* Date error message */
+  .date-error-message {
+    background: #ffebee;
+    color: #c62828;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .date-error-message h3 {
+    margin: 0 0 8px 0;
+  }
+
+  .date-error-message p {
+    margin: 0;
+    font-size: 14px;
+  }
+
+  .pricing-result {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  .pricing-header {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .pricing-header h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 22px;
+  }
+  
+  .pricing-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+  }
+  
+  .summary-item {
+    padding: 15px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .summary-item h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .price-value {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+    color: #333;
+  }
+  
+  .charts-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .chart-box {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+  }
+  
+  .chart-box h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .pricing-strategies {
+    padding: 20px;
+    border-top: 1px solid #eee;
+  }
+  
+  .pricing-strategies h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .strategies-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .strategy-card {
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 2px solid transparent;
+  }
+  
+  .strategy-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .strategy-card.selected {
+    border-color: #4CAF50;
+    background-color: #f1f8e9;
+  }
+  
+  .strategy-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .strategy-header h4 {
+    margin: 0;
+    font-size: 16px;
+  }
+  
+  .strategy-price {
+    font-weight: bold;
+    font-size: 18px;
+    color: #4CAF50;
+  }
+  
+  .strategy-description {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .strategy-action {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+  }
+  
+  .apply-button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+  }
+  
+  .apply-button:hover {
+    background-color: #388E3C;
+  }
+  
+  .apply-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+  
+/* Location: frontend/src/styles/PricingRecommendations.css (continued) */
+.event-impact {
+    padding: 20px;
+    border-top: 1px solid #eee;
+   }
+   
+   .event-impact h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 18px;
+    color: #333;
+   }
+   
+   .events-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 15px;
+   }
+   
+   .event-item {
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    border-left: 4px solid #F44336;
+   }
+   
+   .event-item h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 16px;
+   }
+   
+   .event-item p {
+    margin: 5px 0;
+    font-size: 14px;
+   }
+   
+/* SMERF Floor Rate styles */
+.summary-item.smerf-floor {
+  background-color: #fff3e0;
+  border: 2px solid #ff9800;
+}
+
+.summary-item.smerf-floor h3 {
+  color: #e65100;
+}
+
+.summary-item.smerf-floor .price-value {
+  color: #e65100;
+}
+
+.smerf-badge {
+  display: inline-block;
+  background: #4caf50;
+  color: white;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-top: 5px;
+  font-weight: 500;
+}
+
+/* SMERF Rates Section - All Room Types */
+.smerf-rates-section {
+  padding: 20px;
+  border-top: 1px solid #eee;
+  background: linear-gradient(135deg, #fff8e1 0%, #fff3e0 100%);
+}
+
+.smerf-rates-section h3 {
+  margin-top: 0;
+  margin-bottom: 5px;
+  font-size: 18px;
+  color: #e65100;
+}
+
+.smerf-subtitle {
+  margin: 0 0 15px 0;
+  font-size: 14px;
+  color: #f57c00;
+}
+
+.smerf-rates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 15px;
+}
+
+.smerf-rate-card {
+  background: white;
+  border-radius: 8px;
+  padding: 15px;
+  border: 2px solid #ffcc80;
+  transition: all 0.2s;
+}
+
+.smerf-rate-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 152, 0, 0.2);
+}
+
+.smerf-rate-card.current-room {
+  border-color: #ff9800;
+  background: #fff8e1;
+  box-shadow: 0 2px 8px rgba(255, 152, 0, 0.3);
+}
+
+.smerf-rate-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.smerf-rate-header .room-name {
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+}
+
+.smerf-rate-header .current-badge {
+  background: #ff9800;
+  color: white;
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.smerf-rate-price {
+  font-size: 28px;
+  font-weight: 700;
+  color: #e65100;
+  margin-bottom: 8px;
+}
+
+.smerf-rate-price span {
+  font-size: 14px;
+  font-weight: 400;
+  color: #f57c00;
+}
+
+.smerf-group-name {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.smerf-segment {
+  display: inline-block;
+  font-size: 11px;
+  padding: 2px 8px;
+  background: #ffe0b2;
+  color: #e65100;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+/* Grouped SMERF Card Styles */
+.smerf-grouped-card {
+  background: white;
+  border-radius: 8px;
+  padding: 16px;
+  border: 2px solid #ffcc80;
+  min-width: 280px;
+}
+
+.smerf-group-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.smerf-room-list {
+  margin-top: 12px;
+  border-top: 1px solid #ffe0b2;
+  padding-top: 12px;
+}
+
+.smerf-room-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 10px;
+  background: #fff8e1;
+  border-radius: 4px;
+  margin-bottom: 6px;
+}
+
+.smerf-room-row:last-child {
+  margin-bottom: 0;
+}
+
+.smerf-room-row.current-room-row {
+  background: #fff3e0;
+  border: 1px solid #ff9800;
+}
+
+.smerf-room-name {
+  font-size: 14px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.smerf-room-rate {
+  font-size: 15px;
+  font-weight: 600;
+  color: #e65100;
+}
+
+.current-badge-small {
+  background: #ff9800;
+  color: white;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+   @media (max-width: 768px) {
+    .pricing-recommendations-container {
+      padding: 15px;
+    }
+
+    .pricing-recommendations-container h1 {
+      font-size: 22px;
+      margin-bottom: 15px;
+    }
+
+    .search-container {
+      padding: 15px;
+    }
+
+    .search-container form {
+      flex-direction: column;
+    }
+
+    .search-group {
+      width: 100%;
+      min-width: unset;
+    }
+
+    .search-group select,
+    .search-group input {
+      font-size: 16px;
+      padding: 12px;
+    }
+
+    .search-container button {
+      width: 100%;
+      padding: 14px 20px;
+      font-size: 16px;
+    }
+
+    .date-tabs-container {
+      padding: 10px;
+    }
+
+    .date-tabs {
+      gap: 6px;
+    }
+
+    .date-tab {
+      padding: 10px 12px;
+      font-size: 13px;
+      flex: 1;
+      text-align: center;
+      min-width: unset;
+    }
+
+    .charts-container {
+      grid-template-columns: 1fr;
+      padding: 15px;
+      gap: 15px;
+    }
+
+    .chart-box {
+      min-height: 280px;
+    }
+
+    .chart-box h3 {
+      font-size: 16px;
+    }
+
+    .pricing-header {
+      padding: 15px;
+    }
+
+    .pricing-header h2 {
+      font-size: 18px;
+    }
+
+    .pricing-summary {
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .summary-item {
+      padding: 12px;
+    }
+
+    .summary-item h3 {
+      font-size: 12px;
+    }
+
+    .price-value {
+      font-size: 20px;
+    }
+
+    .strategies-list {
+      grid-template-columns: 1fr;
+    }
+
+    .strategy-card {
+      padding: 15px;
+    }
+
+    .strategy-header h4 {
+      font-size: 14px;
+    }
+
+    .strategy-price {
+      font-size: 16px;
+    }
+
+    .strategy-description {
+      font-size: 13px;
+    }
+
+    .strategy-action {
+      flex-direction: column;
+      gap: 12px;
+      text-align: center;
+      padding: 15px;
+    }
+
+    .strategy-action p {
+      font-size: 14px;
+    }
+
+    .apply-button {
+      width: 100%;
+      padding: 14px 20px;
+      font-size: 16px;
+    }
+
+    .smerf-rates-section {
+      padding: 15px;
+    }
+
+    .smerf-rates-section h3 {
+      font-size: 16px;
+    }
+
+    .smerf-rates-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .smerf-grouped-card {
+      min-width: unset;
+    }
+
+    .smerf-rate-price {
+      font-size: 24px;
+    }
+
+    .event-impact {
+      padding: 15px;
+    }
+
+    .events-list {
+      grid-template-columns: 1fr;
+    }
+
+    .event-item {
+      padding: 12px;
+    }
+   }
+
+   @media (max-width: 480px) {
+    .pricing-summary {
+      grid-template-columns: 1fr;
+    }
+
+    .summary-item {
+      padding: 15px;
+    }
+
+    .price-value {
+      font-size: 22px;
+    }
+
+    .date-tab {
+      padding: 8px 10px;
+      font-size: 12px;
+    }
+   }

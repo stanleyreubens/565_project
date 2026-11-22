@@ -1,0 +1,23 @@
+{
+  "installCommand": "npm install && cd frontend && npm install --legacy-peer-deps",
+  "buildCommand": "cd frontend && npm run build",
+  "outputDirectory": "frontend/build",
+  "framework": null,
+  "functions": {
+    "api/**/*.js": {
+      "maxDuration": 30
+    }
+  },
+  "rewrites": [
+    { "source": "/api/auth/(.*)", "destination": "/api/auth/[[...path]]" },
+    { "source": "/api/events/(.*)", "destination": "/api/events/[[...path]]" },
+    { "source": "/api/hotels/(.*)", "destination": "/api/hotels/[[...path]]" },
+    { "source": "/api/pricing/(.*)", "destination": "/api/pricing/[[...path]]" },
+    { "source": "/api/reminders/(.*)", "destination": "/api/reminders/[[...path]]" },
+    { "source": "/api/auth", "destination": "/api/auth/[[...path]]" },
+    { "source": "/api/events", "destination": "/api/events/[[...path]]" },
+    { "source": "/api/hotels", "destination": "/api/hotels/[[...path]]" },
+    { "source": "/api/pricing", "destination": "/api/pricing/[[...path]]" },
+    { "source": "/api/reminders", "destination": "/api/reminders/[[...path]]" }
+  ]
+}

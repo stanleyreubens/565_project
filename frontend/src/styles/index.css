@@ -1,0 +1,75 @@
+/* Global styles */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Improve touch scrolling on mobile */
+html, body {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Ensure images don't overflow on mobile */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Better focus styles for accessibility */
+button:focus,
+input:focus,
+select:focus,
+textarea:focus,
+a:focus {
+  outline: 2px solid #4a6fff;
+  outline-offset: 2px;
+}
+
+/* Remove default button styles for better mobile tap highlighting */
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Smooth scrolling */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Better table layout on mobile */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+/* Responsive typography base */
+html {
+  font-size: 16px;
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,204 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Organization {
+  id           String   @id @default(uuid())
+  name         String
+  emailDomain  String   @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  users        User[]
+  hotels       Hotel[]
+  reminders    Reminder[]
+}
+
+model User {
+  id             String        @id @default(uuid())
+  name           String
+  email          String        @unique
+  password       String
+  role           Role          @default(USER)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  organizationId String?
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  hotels         Hotel[]
+  reminders      Reminder[]
+}
+
+model Hotel {
+  id             String        @id @default(uuid())
+  name           String
+  street         String?
+  city           String
+  state          String?
+  zipCode        String?
+  country        String?
+  starRating     Float?
+  amenities      String[]
+  active         Boolean       @default(true)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  ownerId        String
+  owner          User          @relation(fields: [ownerId], references: [id])
+  organizationId String?
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  roomTypes      RoomType[]
+  competitors    Competitor[]
+  pricing        PricingHistory[]
+  smerfRates     SmerfRate[]
+  reminders      Reminder[]
+}
+
+model RoomType {
+  id         String   @id @default(uuid())
+  name       String
+  basePrice  Float
+  capacity   Int
+  features   String[]
+  hotelId    String
+  hotel      Hotel    @relation(fields: [hotelId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  pricing    PricingHistory[]
+  smerfRates SmerfRate[]
+}
+
+model Competitor {
+  id         String   @id @default(uuid())
+  externalId String?
+  name       String
+  starRating Float?
+  distance   Float?
+  hotelId    String
+  hotel      Hotel    @relation(fields: [hotelId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Event {
+  id                 String      @id @default(uuid())
+  name               String
+  description        String?
+  venue              String?
+  address            String?
+  city               String
+  state              String?
+  country            String?
+  latitude           Float?
+  longitude          Float?
+  startDate          DateTime
+  endDate            DateTime
+  expectedAttendance Int?
+  category           String?
+  source             EventSource
+  sourceId           String?
+  impactScore        Int         @default(5)
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+  pricingHistory     PricingHistory[]
+
+  @@index([city, startDate, endDate])
+}
+
+model PricingHistory {
+  id               String   @id @default(uuid())
+  date             DateTime
+  price            Float
+  recommendedPrice Float?
+  actualPrice      Float?
+  occupancyRate    Float?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  hotelId          String
+  hotel            Hotel    @relation(fields: [hotelId], references: [id])
+  roomTypeId       String
+  roomType         RoomType @relation(fields: [roomTypeId], references: [id])
+  events           Event[]
+  competitorPrices CompetitorPrice[]
+
+  @@unique([hotelId, roomTypeId, date])
+}
+
+model CompetitorPrice {
+  id               String         @id @default(uuid())
+  hotelId          String
+  hotelName        String
+  roomType         String?
+  price            Float
+  pricingHistoryId String
+  pricingHistory   PricingHistory @relation(fields: [pricingHistoryId], references: [id])
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+}
+
+enum Role {
+  USER
+  ADMIN
+  SUPER_ADMIN
+}
+
+enum EventSource {
+  EVENTBRITE
+  PREDICTHQ
+  TICKETMASTER
+  MANUAL
+}
+
+model SmerfRate {
+  id          String   @id @default(uuid())
+  startDate   DateTime
+  endDate     DateTime
+  rate        Float
+  groupName   String?
+  segment     String?
+  notes       String?
+  hotelId     String
+  hotel       Hotel    @relation(fields: [hotelId], references: [id])
+  roomTypeId  String
+  roomType    RoomType @relation(fields: [roomTypeId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([hotelId, roomTypeId, startDate, endDate])
+}
+
+model Reminder {
+  id             String           @id @default(uuid())
+  title          String
+  description    String?
+  dueDate        DateTime
+  priority       ReminderPriority @default(MEDIUM)
+  status         ReminderStatus   @default(PENDING)
+  category       String?
+  hotelId        String?
+  hotel          Hotel?           @relation(fields: [hotelId], references: [id])
+  createdById    String
+  createdBy      User             @relation(fields: [createdById], references: [id])
+  organizationId String
+  organization   Organization     @relation(fields: [organizationId], references: [id])
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  @@index([organizationId, dueDate])
+  @@index([organizationId, status])
+}
+
+enum ReminderPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum ReminderStatus {
+  PENDING
+  COMPLETED
+  DISMISSED
+}

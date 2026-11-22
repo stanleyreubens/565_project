@@ -1,0 +1,602 @@
+/* Location: frontend/src/styles/HotelForm.css */
+
+.hotel-form-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.hotel-form-container h1 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.form-description {
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.loading-container {
+  padding: 50px;
+  text-align: center;
+  color: #666;
+}
+
+.error-message {
+  padding: 15px;
+  background-color: #FFEBEE;
+  color: #D32F2F;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.success-message {
+  padding: 15px;
+  background-color: #E8F5E9;
+  color: #2E7D32;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+/* Form Sections */
+.form-section {
+  background-color: white;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 25px;
+}
+
+.form-section h2 {
+  margin: 0 0 20px 0;
+  font-size: 18px;
+  color: #333;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #eee;
+}
+
+.section-description {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+/* Form Groups */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #4a6fff;
+}
+
+.form-group small {
+  display: block;
+  margin-top: 5px;
+  color: #666;
+  font-size: 12px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+/* Room Types Section */
+.room-types-section {
+  border: 2px solid #4a6fff;
+}
+
+.room-types-list {
+  margin-bottom: 20px;
+}
+
+.room-type-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.room-type-info {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.room-type-info strong {
+  color: #333;
+}
+
+.room-rate {
+  color: #4a6fff;
+  font-weight: 600;
+}
+
+.room-occupancy {
+  color: #666;
+  font-size: 14px;
+}
+
+.add-room-type {
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.add-room-type h4 {
+  margin: 0 0 15px 0;
+  color: #333;
+}
+
+.add-btn {
+  padding: 10px 20px;
+  background-color: #4a6fff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.add-btn:hover {
+  background-color: #3a5fe0;
+}
+
+.add-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.remove-btn {
+  padding: 6px 12px;
+  background-color: #F44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.remove-btn:hover {
+  background-color: #D32F2F;
+}
+
+/* Amenities */
+.amenities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.amenity-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.amenity-checkbox:hover {
+  background-color: #e0e0e0;
+}
+
+.amenity-checkbox input {
+  width: auto;
+}
+
+.amenity-checkbox input:checked + span {
+  color: #4a6fff;
+}
+
+.custom-amenity {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.custom-amenity input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.custom-amenity button {
+  padding: 10px 20px;
+  background-color: #4a6fff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.custom-amenities-list h4 {
+  margin: 0 0 10px 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.custom-amenity-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  background-color: #E3F2FD;
+  color: #1565C0;
+  border-radius: 20px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+
+.custom-amenity-tag button {
+  background: none;
+  border: none;
+  color: #1565C0;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0;
+  line-height: 1;
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.cancel-btn {
+  padding: 12px 30px;
+  background-color: #f5f5f5;
+  color: #333;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.cancel-btn:hover {
+  background-color: #e0e0e0;
+}
+
+.submit-btn {
+  padding: 12px 30px;
+  background-color: #4a6fff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.submit-btn:hover {
+  background-color: #3a5fe0;
+}
+
+.submit-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Mode Toggle */
+.mode-toggle {
+  display: flex;
+  gap: 0;
+  margin-bottom: 25px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.mode-btn {
+  flex: 1;
+  padding: 12px 20px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+  color: #666;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.mode-btn:hover {
+  color: #333;
+}
+
+.mode-btn.active {
+  background-color: white;
+  color: #4a6fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Import Section */
+.import-section {
+  background-color: white;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 25px;
+}
+
+.import-section h2 {
+  margin: 0 0 10px 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.import-section > p {
+  color: #666;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+/* Search Form */
+.search-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.search-form input {
+  flex: 1;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.search-form input:focus {
+  outline: none;
+  border-color: #4a6fff;
+}
+
+.search-btn {
+  padding: 12px 25px;
+  background-color: #4a6fff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+}
+
+.search-btn:hover {
+  background-color: #3a5fe0;
+}
+
+.search-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Search Results */
+.search-results {
+  margin-top: 20px;
+}
+
+.search-results h3 {
+  margin: 0 0 15px 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.hotel-results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 15px;
+}
+
+.hotel-result-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 15px;
+  background-color: #fafafa;
+  transition: all 0.2s ease;
+}
+
+.hotel-result-card:hover {
+  border-color: #4a6fff;
+  box-shadow: 0 4px 12px rgba(74, 111, 255, 0.15);
+}
+
+.hotel-result-card h4 {
+  margin: 0 0 8px 0;
+  font-size: 15px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hotel-result-card .star-rating {
+  color: #FFC107;
+  font-size: 13px;
+}
+
+.hotel-result-card .hotel-address {
+  color: #666;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.hotel-result-card .hotel-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.hotel-result-card .hotel-price {
+  font-weight: 600;
+  color: #2E7D32;
+  font-size: 14px;
+}
+
+.hotel-result-card .hotel-score {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  color: #666;
+}
+
+.hotel-result-card .hotel-score .score-value {
+  background-color: #4a6fff;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.import-btn {
+  width: 100%;
+  padding: 10px 15px;
+  background-color: #4a6fff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.import-btn:hover {
+  background-color: #3a5fe0;
+}
+
+.import-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.import-btn.importing {
+  background-color: #FFA726;
+}
+
+/* Manual Entry Prompt */
+.manual-entry-prompt {
+  text-align: center;
+  padding: 30px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.manual-entry-prompt p {
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.manual-entry-prompt button {
+  padding: 10px 25px;
+  background-color: transparent;
+  color: #4a6fff;
+  border: 2px solid #4a6fff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.manual-entry-prompt button:hover {
+  background-color: #4a6fff;
+  color: white;
+}
+
+/* No Results */
+.no-results {
+  text-align: center;
+  padding: 30px;
+  color: #666;
+}
+
+/* Loading State in Import */
+.search-loading {
+  text-align: center;
+  padding: 30px;
+  color: #666;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .room-type-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .room-type-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions button {
+    width: 100%;
+  }
+
+  .amenities-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mode-toggle {
+    flex-direction: column;
+  }
+
+  .search-form {
+    flex-direction: column;
+  }
+
+  .hotel-results-grid {
+    grid-template-columns: 1fr;
+  }
+}
